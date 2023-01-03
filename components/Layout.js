@@ -4,7 +4,6 @@ import Link from 'next/link';
 import React, { useContext, useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 import { Store } from '../utils/Store';
 
 export default function Layout({ title, children }) {
