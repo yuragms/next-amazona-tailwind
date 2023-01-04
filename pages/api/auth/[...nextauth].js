@@ -1,8 +1,8 @@
+import bcryptjs from 'bcryptjs';
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import User from '../../../models/User';
 import db from '../../../utils/db';
-import bcryptjs from 'bcryptjs';
 
 export default NextAuth({
   session: {
@@ -20,7 +20,7 @@ export default NextAuth({
       return session;
     },
   },
-  provides: [
+  providers: [
     CredentialsProvider({
       async authorize(credentials) {
         await db.connect();
