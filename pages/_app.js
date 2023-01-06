@@ -33,4 +33,5 @@ function Auth({ children }) {
   if (status === 'loaading') {
     return <div>Loading...</div>;
   }
+  return children;
 }

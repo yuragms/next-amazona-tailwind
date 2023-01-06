@@ -44,7 +44,7 @@ function reducer(state, action) {
         cart: {
           ...state.cart,
           shippingAddress: {
-            ...state.csrt.shippingAddress,
+            ...state.cart.shippingAddress,
             ...action.payload,
           },
         },
