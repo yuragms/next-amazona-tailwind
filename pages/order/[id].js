@@ -43,6 +43,8 @@ function OrderScreen() {
     });
 
   useEffect(() => {
+    console.log(typeof order._id);
+    console.log(typeof orderId);
     const fetchOrder = async () => {
       try {
         dispatch({ type: 'FETCH_REQUEST' });
@@ -52,6 +54,7 @@ function OrderScreen() {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
       }
     };
+
     if (!order._id || successPay || (order._id && order._id !== orderId)) {
       fetchOrder();
       if (successPay) {
@@ -72,6 +75,7 @@ function OrderScreen() {
       loadPaypalScript();
     }
   }, [order, orderId, paypalDispatch, successPay]);
+
   const {
     shippingAddress,
     paymentMethod,
@@ -108,6 +112,7 @@ function OrderScreen() {
           `/api/orders/${order._id}/pay`,
           details
         );
+        console.log(details);
         dispatch({ type: 'PAY_SUCCESS', payload: data });
         toast.success('Order is paid successgully');
       } catch (err) {
