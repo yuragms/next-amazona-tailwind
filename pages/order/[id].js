@@ -19,7 +19,7 @@ function reducer(state, action) {
     case 'PAY_REQUEST':
       return { ...state, loadingPay: true };
     case 'PAY_SUCCESS':
-      return { ...state, loadingPay: false, succesPay: true };
+      return { ...state, loadingPay: false, successPay: true };
     case 'PAY_FAIL':
       return { ...state, loadingPay: false, errorPay: action.payload };
     case 'PAY_RESET':
@@ -54,8 +54,9 @@ function OrderScreen() {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
       }
     };
-
-    if (!order._id || successPay || (order._id && order._id !== orderId)) {
+    //  if (orderId && order._id !== orderId) {
+    // if (!order._id || successPay || (order._id && order._id !== orderId)) {
+    if (successPay || (orderId && order._id !== orderId)) {
       fetchOrder();
       if (successPay) {
         dispatch({ type: 'PAY_RESET' });

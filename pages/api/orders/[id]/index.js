@@ -8,7 +8,8 @@ const handler = async (req, res) => {
     return res.status(401).send('signin required');
   }
   await db.connect();
-
+  console.log(req.query.id);
+  console.log(typeof req.query.id);
   const order = await Order.findById(req.query.id);
   await db.disconnect();
   res.send(order);
