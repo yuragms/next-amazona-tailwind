@@ -33,7 +33,7 @@ function Auth({ children, adminOnly }) {
       router.push('/unauthorized?message=login required');
     },
   });
-  if (status === 'loaading') {
+  if (status === 'loading') {
     return <div>Loading...</div>;
   }
   if (adminOnly && !session.user.isAdmin) {
@@ -41,3 +41,23 @@ function Auth({ children, adminOnly }) {
   }
   return children;
 }
+
+// function Auth({ children, adminOnly }) {
+//   const router = useRouter();
+//   const { status, data: session } = useSession({
+//     required: true,
+//     onUnauthenticated() {
+//       router.push('/unauthorized?message=login required');
+//     },
+//   });
+//   if (status === 'loading') {
+//     return <div>Loading...</div>;
+//   }
+//   if (adminOnly && !session.user.isAdmin) {
+//     router.push('/unauthorized?message=admin login required');
+//   }
+
+//   return children;
+// }
+
+// export default MyApp;
