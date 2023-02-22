@@ -7,13 +7,17 @@ const handler = async (req, res) => {
   if (!session || (session && !session.user.isAdmin)) {
     return res.status(401).send('signin required');
   }
-  //   const { user } = session;
+  const { user } = session;
   if (req.method === 'GET') {
     return getHandler(req, res);
+  } else if (req.method === 'POST') {
+    return postHandler(req, res, user);
   } else {
     return res.status(400).send({ message: 'Method not allowed' });
   }
 };
+
+const postHandler = async (req, res, user) => {};
 
 const getHandler = async (req, res) => {
   await db.connect();
