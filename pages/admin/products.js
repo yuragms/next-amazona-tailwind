@@ -21,6 +21,16 @@ function reducer(state, action) {
       return { ...state, loadingCreate: false };
     case 'CREATE_FAIL':
       return { ...state, loadingCreate: false };
+
+    case 'DELETE_REQUEST':
+      return { ...state, loadingDelete: true };
+    case 'DELETE_SUCCESS':
+      return { ...state, loadingDelete: false, successDelete: true };
+    case 'DELETE_FAIL':
+      return { ...state, loadingDelete: false };
+    case 'DELETE_RESET':
+      return { ...state, loadingDelete: false, successDelete: false };
+
     default:
       state;
   }
@@ -64,8 +74,28 @@ export default function AdminProductsScreen() {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
       }
     };
-    fetchData();
-  }, []);
+
+    if (successDelete) {
+      dispatch({ type: 'DELETE_RESET' });
+    } else {
+      fetchData();
+    }
+  }, [successDelete]);
+
+  const deleteHandler = async (productId) => {
+    if (!window.confirm('Are you sure?')) {
+      return;
+    }
+    try {
+      dispatch({ type: 'DELETE_REQUEST' });
+      await axios.delete(`/api/admin/products/${productId}`);
+      dispatch({ type: 'DELETE_SUCCESS' });
+      toast.success('Product deleted successfully');
+    } catch (err) {
+      dispatch({ type: 'DELETE_FAIL' });
+      toast.error(getError(err), { variant: 'error' });
+    }
+  };
   return (
     <Layout title="Admin Products">
       <div className="grid md:grid-cols-4 md:gap-5">
@@ -122,14 +152,26 @@ export default function AdminProductsScreen() {
                     <tr key={product._id} className="border-b">
                       <td className="p-5">{product._id.substring(20, 24)}</td>
                       <td className="p-5">{product.name}</td>
-                      <td className="p-5">{product.price}</td>
+                      <td className="p-5">${product.price}</td>
                       <td className="p-5">{product.category}</td>
                       <td className="p-5">{product.countInStock}</td>
                       <td className="p-5">{product.rating}</td>
                       <td className="p-5">
-                        <Link href={`/admin/product/${product._id}`}>Edit</Link>
+                        <Link
+                          href={`/admin/product/${product._id}`}
+                          className="default-button"
+                          type="button"
+                        >
+                          Edit
+                        </Link>
                         &nbsp;
-                        <button>Delete</button>
+                        <button
+                          onClick={() => deleteHandler(product._id)}
+                          className="default-button"
+                          type="button"
+                        >
+                          Delete
+                        </button>
                       </td>
                     </tr>
                   ))}

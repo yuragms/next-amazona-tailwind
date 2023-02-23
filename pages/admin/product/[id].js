@@ -246,6 +246,36 @@ export default function AdminProductEditScreen() {
                 )}
               </div>
               <div className="mb-4">
+                <label htmlFor="brand">brand</label>
+                <input
+                  type="text"
+                  className="w-full"
+                  id="brand"
+                  {...register('brand', {
+                    required: 'Please enter brand',
+                  })}
+                />
+                {errors.brand && (
+                  <div className="text-red-500">{errors.brand.message}</div>
+                )}
+              </div>
+              <div className="mb-4">
+                <label htmlFor="countStock">countStock</label>
+                <input
+                  type="text"
+                  className="w-full"
+                  id="countStock"
+                  {...register('brand', {
+                    required: 'Please enter countStock',
+                  })}
+                />
+                {errors.countStock && (
+                  <div className="text-red-500">
+                    {errors.countStock.message}
+                  </div>
+                )}
+              </div>
+              <div className="mb-4">
                 <label htmlFor="description">description</label>
                 <input
                   type="text"
