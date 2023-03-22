@@ -31,6 +31,9 @@ export default function ProfileScreen() {
         password,
       });
       toast.success('Profile update successfully');
+      if (result.error) {
+        toast.error(result.error);
+      }
     } catch (err) {
       toast.error(getError(err));
     }
